@@ -1,22 +1,31 @@
-from collections import deque
+import turtle
 
-def is_palindrome(input_str):
-  
-    char_str = deque()
+def koch_curve(t, order, size):
+    if order == 0:
+        t.forward(size)
+    else:
+        for angle in [60, -120, 60, 0]:
+            koch_curve(t, order-1, size/3)
+            t.left(angle)
 
-    # Перетворюємо рядок в нижній регістр і видаляємо пробіли
-    input_str = input_str.lower().replace(" ", "")
+def main():
 
-    # Додаємо символи рядка до двосторонньої черги
-    for char in input_str:
-        char_str.append(char)
+    order = int(input("Enter the level of recursion: "))
 
-    # Порівнюємо символи з обох кінців черги для визначення, чи є рядок паліндромом
-    while len(char_str) > 1:
-        if char_str.popleft() != char_str.pop():
-            return False
+    window = turtle.Screen()
+    window.bgcolor("pink")
+    t = turtle.Turtle()
+    t.speed(0)  
 
-    return True
+    t.penup()
+    t.goto(-150, 90)
+    t.pendown()
 
-# input_string = "A man a plan a canal Panama"
-# print(is_palindrome(input_string)) 
+    for _ in range(3):
+        koch_curve(t, order, 300)
+        t.right(120)
+
+    window.mainloop()
+
+if __name__ == "__main__":
+    main()
